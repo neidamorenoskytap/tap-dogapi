@@ -12,6 +12,7 @@ REQUIRED_CONFIG_KEYS = ["api_key"]
 # what does this logger thing do?
 LOGGER = singer.get_logger()
 
+# I added this
 def make_api_request(url, headers):
     response = requests.get("url", headers={headers})
     return response
@@ -35,7 +36,8 @@ def discover():
     raw_schemas = load_schemas()
     streams = []
     for stream_id, schema in raw_schemas.items():
-        # TODO: populate any metadata and stream's key properties here..
+        # TODO: populate any metadata and stream's key properties here..\
+        # I added this
         stream_metadata = [{
   "metadata" : {
     "selected" : True,
@@ -72,6 +74,7 @@ def sync(config, state, catalog):
 
         bookmark_column = stream.replication_key
         is_sorted = True  # TODO: indicate whether data is sorted ascending on bookmark value
+        # not sure what this todo is asking ^
 
         singer.write_schema(
             stream_name=stream.tap_stream_id,
@@ -81,11 +84,14 @@ def sync(config, state, catalog):
 
         # TODO: delete and replace this inline function with your own data retrieval process:
         # tap_data = lambda: [{"id": x, "name": "row${x}"} for x in range(1000)]
+        # here is where I get the data from API
+        # I added this
         tap_data = make_api_request(api_endpoint, config.get("api_key"))
 
         max_bookmark = None
         for row in tap_data():
             # TODO: place type conversions or transformations here
+            # again, not sure what this todo is saying ^
 
             # write one or more rows to the stream:
             singer.write_records(stream.tap_stream_id, [row])
