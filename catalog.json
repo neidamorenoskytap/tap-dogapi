@@ -1,0 +1,50 @@
+{
+    "streams": [
+      {
+        "tap_stream_id": "dog_breeds",
+        "key_properties": [
+          "id"
+        ],
+        "schema": {
+          "properties": {
+            "id": {
+              "type": [
+                "null",
+                "integer"
+              ]
+            },
+            "name": {
+              "type": [
+                "null",
+                "string"
+              ]
+            },
+            "temperament": {
+              "type": [
+                "null",
+                "string"
+              ]
+            }
+          },
+          "type": [
+            "null",
+            "object"
+          ],
+          "additionalProperties": false
+        },
+        "stream": "dog_breeds",
+        "metadata": [
+          {
+            "metadata": {
+              "selected": true,
+              "table-key-properties": [
+                "id"
+              ],
+              "schema-name": "dog_breeds"
+            },
+            "breadcrumb": []
+          }
+        ]
+      }
+    ]
+  }
