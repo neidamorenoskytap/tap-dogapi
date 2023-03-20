@@ -6,7 +6,7 @@ spec](https://github.com/singer-io/getting-started/blob/master/SPEC.md).
 
 This tap:
 
-- Pulls raw data from [FIXME](http://example.com)
+- Pulls raw data from The Dog API (https://thedogapi.com/)
 - Extracts the following resources:
   - [FIXME](http://example.com)
 - Outputs the schema for each resource
