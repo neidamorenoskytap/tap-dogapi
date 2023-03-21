@@ -3,7 +3,7 @@ import os
 import json
 import requests
 import singer
-from singer import utils, metadata
+from singer import utils, metadata, Transformer
 from singer.catalog import Catalog, CatalogEntry
 from singer.schema import Schema
 
@@ -13,9 +13,9 @@ REQUIRED_CONFIG_KEYS = ["api_key"]
 LOGGER = singer.get_logger()
 
 # I added this
-def make_api_request(url, headers):
-    response = requests.get("url", headers={headers})
-    return response
+def make_api_request(url, api_key):
+    response = requests.get(url, headers={"x-api-key":api_key})
+    return response.json()
 
 def get_abs_path(path):
     return os.path.join(os.path.dirname(os.path.realpath(__file__)), path)
@@ -71,6 +71,8 @@ def sync(config, state, catalog):
     # Loop over selected streams in catalog
     for stream in catalog.get_selected_streams(state):
         LOGGER.info("Syncing stream:" + stream.tap_stream_id)
+        stream_id = stream.tap_stream_id
+        stream_schema = stream.schema
 
         bookmark_column = stream.replication_key
         is_sorted = True  # TODO: indicate whether data is sorted ascending on bookmark value
@@ -78,7 +80,7 @@ def sync(config, state, catalog):
 
         singer.write_schema(
             stream_name=stream.tap_stream_id,
-            schema=stream.schema,
+            schema=stream.schema.to_dict(),
             key_properties=stream.key_properties,
         )
 
@@ -89,9 +91,11 @@ def sync(config, state, catalog):
         tap_data = make_api_request(api_endpoint, config.get("api_key"))
 
         max_bookmark = None
-        for row in tap_data():
+        for row in tap_data:
             # TODO: place type conversions or transformations here
             # again, not sure what this todo is saying ^
+
+
 
             # write one or more rows to the stream:
             singer.write_records(stream.tap_stream_id, [row])

@@ -1,6 +1,7 @@
 {
     "streams": [
       {
+        "stream": "dog_breeds",
         "tap_stream_id": "dog_breeds",
         "key_properties": [
           "id"
@@ -32,7 +33,7 @@
           ],
           "additionalProperties": false
         },
-        "stream": "dog_breeds",
+        
         "metadata": [
           {
             "metadata": {
