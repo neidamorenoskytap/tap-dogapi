@@ -1,51 +1,285 @@
 {
-    "streams": [
-      {
-        "stream": "dog_breeds",
-        "tap_stream_id": "dog_breeds",
-        "key_properties": [
-          "id"
-        ],
-        "schema": {
-          "properties": {
-            "id": {
-              "type": [
-                "null",
-                "integer"
-              ]
-            },
-            "name": {
-              "type": [
-                "null",
-                "string"
-              ]
-            },
-            "temperament": {
-              "type": [
-                "null",
-                "string"
-              ]
-            }
+  "streams": [
+    {
+      "tap_stream_id": "dog_breeds",
+      "key_properties": [
+        "id"
+      ],
+      "schema": {
+        "properties": {
+          "id": {
+            "type": [
+              "null",
+              "integer"
+            ]
           },
-          "type": [
-            "null",
-            "object"
-          ],
-          "additionalProperties": false
-        },
-        
-        "metadata": [
-          {
-            "metadata": {
-              "selected": true,
-              "table-key-properties": [
-                "id"
-              ],
-              "schema-name": "dog_breeds"
-            },
-            "breadcrumb": []
+          "name": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "temperament": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "bred_for": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "height_metric": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "height_imperial": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "weight_metric": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "weight_imperial": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "breed_group": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "life_span": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "origin": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "reference_image_id": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "image_id": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "image_width": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "image_height": {
+            "type": [
+              "null",
+              "string"
+            ]
+          },
+          "image_url": {
+            "type": [
+              "null",
+              "string"
+            ]
           }
+        },
+        "type": [
+          "null",
+          "object"
         ]
-      }
-    ]
-  }
+      },
+      "stream": "dog_breeds",
+      "metadata": [
+        {
+          "breadcrumb": [],
+          "metadata": {
+            "table-key-properties": [
+              "id"
+            ],
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "id"
+          ],
+          "metadata": {
+            "inclusion": "automatic"
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "name"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "temperament"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": true
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "bred_for"
+          ],
+          "metadata": {
+            "inclusion": "unsupported"
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "height_metric"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": false
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "height_imperial"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": false
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "weight_metric"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": false
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "weight_imperial"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": false
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "breed_group"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": false
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "life_span"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": false
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "origin"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": false
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "reference_image_id"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": false
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "image_id"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": false
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "image_width"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": false
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "image_height"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": false
+          }
+        },
+        {
+          "breadcrumb": [
+            "properties",
+            "image_url"
+          ],
+          "metadata": {
+            "inclusion": "available",
+            "selected": false
+          }
+        }
+      ]
+    }
+  ]
+}

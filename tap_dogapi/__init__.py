@@ -6,6 +6,7 @@ import singer
 from singer import utils, metadata, Transformer
 from singer.catalog import Catalog, CatalogEntry
 from singer.schema import Schema
+from .streams import STREAM_OBJECTS
 
 api_endpoint = "https://api.thedogapi.com/v1/breeds"
 REQUIRED_CONFIG_KEYS = ["api_key"]
@@ -37,16 +38,13 @@ def discover():
     streams = []
     for stream_id, schema in raw_schemas.items():
         # TODO: populate any metadata and stream's key properties here..\
-        # I added this
-        stream_metadata = [{
-  "metadata" : {
-    "selected" : True,
-    "table-key-properties": ["id"],
-    "schema-name": "dog_breeds",
-  },
-  "breadcrumb": []
-}]
+
         key_properties = ['id']
+        stream_metadata = metadata.get_standard_metadata(
+            schema=schema.to_dict(),
+            key_properties=key_properties
+        )
+        
         streams.append(
             CatalogEntry(
                 tap_stream_id=stream_id,
@@ -70,44 +68,47 @@ def sync(config, state, catalog):
     """ Sync data from tap source """
     # Loop over selected streams in catalog
     for stream in catalog.get_selected_streams(state):
-        LOGGER.info("Syncing stream:" + stream.tap_stream_id)
         stream_id = stream.tap_stream_id
         stream_schema = stream.schema
+        stream_object = STREAM_OBJECTS.get(stream_id)(config, state, catalog)
+
+        if stream_object is None:
+            raise Exception("This stream is unknown".format(stream_id))
+        
 
         bookmark_column = stream.replication_key
         is_sorted = True  # TODO: indicate whether data is sorted ascending on bookmark value
-        # not sure what this todo is asking ^
 
         singer.write_schema(
-            stream_name=stream.tap_stream_id,
-            schema=stream.schema.to_dict(),
-            key_properties=stream.key_properties,
+            stream_name=stream_id,
+            schema=stream_schema.to_dict(),
+            key_properties=stream_object.key_properties,
         )
 
-        # TODO: delete and replace this inline function with your own data retrieval process:
-        # tap_data = lambda: [{"id": x, "name": "row${x}"} for x in range(1000)]
-        # here is where I get the data from API
-        # I added this
+        LOGGER.info("Syncing stream:" + stream.tap_stream_id)
+
+        # Getting API data
         tap_data = make_api_request(api_endpoint, config.get("api_key"))
 
         max_bookmark = None
-        for row in tap_data:
-            # TODO: place type conversions or transformations here
-            # again, not sure what this todo is saying ^
-
-
-
+        with Transformer() as transformer:
+            for row in tap_data:
             # write one or more rows to the stream:
-            singer.write_records(stream.tap_stream_id, [row])
-            if bookmark_column:
-                if is_sorted:
+                singer.write_record(stream_id, 
+                                    transformer.transform(row,
+                                                          stream_schema.to_dict(),
+                                                          metadata.to_map(stream.metadata)
+                                                          )
+                                    )
+                if bookmark_column:
+                    if is_sorted:
                     # update bookmark to latest value
-                    singer.write_state({stream.tap_stream_id: row[bookmark_column]})
-                else:
+                        singer.write_state({stream.tap_stream_id: row[bookmark_column]})
+                    else:
                     # if data unsorted, save max value until end of writes
-                    max_bookmark = max(max_bookmark, row[bookmark_column])
-        if bookmark_column and not is_sorted:
-            singer.write_state({stream.tap_stream_id: max_bookmark})
+                        max_bookmark = max(max_bookmark, row[bookmark_column])
+            if bookmark_column and not is_sorted:
+                singer.write_state({stream.tap_stream_id: max_bookmark})
     return
 
 

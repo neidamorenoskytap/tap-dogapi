@@ -3,7 +3,6 @@
         "null", 
         "object"
     ],
-    "additionalProperties": false,
     "properties": {
 	    "id": {
 	        "type": [
@@ -15,6 +14,45 @@
 	        "type": ["null", "string"]
         },
       	"temperament": {
+	        "type": ["null", "string"]
+        },
+        "bred_for": {
+	        "type": ["null", "string"]
+        },
+        "height_metric": {
+	        "type": ["null", "string"]
+        },
+        "height_imperial": {
+	        "type": ["null", "string"]
+        },
+        "weight_metric": {
+	        "type": ["null", "string"]
+        },
+        "weight_imperial": {
+	        "type": ["null", "string"]
+        },
+        "breed_group": {
+	        "type": ["null", "string"]
+        },
+        "life_span": {
+	        "type": ["null", "string"]
+        },
+        "origin": {
+	        "type": ["null", "string"]
+        },
+        "reference_image_id": {
+	        "type": ["null", "string"]
+        },
+        "image_id": {
+	        "type": ["null", "string"]
+        },
+        "image_width": {
+	        "type": ["null", "string"]
+        },
+        "image_height": {
+	        "type": ["null", "string"]
+        },
+        "image_url": {
 	        "type": ["null", "string"]
         }
     }
