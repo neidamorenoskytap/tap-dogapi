@@ -76,7 +76,8 @@ def sync(config, state, catalog):
             raise Exception("This stream is unknown".format(stream_id))
         
 
-        bookmark_column = stream.replication_key
+        bookmark_column = stream.metadata[0]["metadata"]["replication-key"]
+        # print("bookmark column is ", bookmark_column)
         is_sorted = True  # TODO: indicate whether data is sorted ascending on bookmark value
 
         singer.write_schema(
@@ -103,12 +104,12 @@ def sync(config, state, catalog):
                 if bookmark_column:
                     if is_sorted:
                     # update bookmark to latest value
-                        singer.write_state({stream.tap_stream_id: row[bookmark_column]})
+                        singer.write_state({stream.tap_stream_id: {bookmark_column: row[bookmark_column]}})
                     else:
                     # if data unsorted, save max value until end of writes
                         max_bookmark = max(max_bookmark, row[bookmark_column])
             if bookmark_column and not is_sorted:
-                singer.write_state({stream.tap_stream_id: max_bookmark})
+                singer.write_state({stream.tap_stream_id: {bookmark_column: max_bookmark}})
     return
 
 
